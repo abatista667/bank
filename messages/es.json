@@ -1,0 +1,30 @@
+{
+    "create": "Crear nuevo",
+    "cancel": "Cancelar",
+    "menu": {
+      "transaction": "Transacción",
+      "account": "Cuenta"
+    },
+    "account":{
+        "title": "Cuenta",
+        "filter": "Filtrar por Alias",
+        "alias": "Alias",
+        "balance": "Balance",
+        "currency": "Moneda",
+        "ownerId": "Dueño Id",
+        "save": "Guardar",
+        "confirmDelete": "Estas seguro que quieres borrar esta cuenta?",
+        "ownerIdNotUnique": "No puedes crear una cuenta con un ID existente"
+    },
+    "transaction":{
+        "title": "Transacción",
+        "from": "Desde Cuenta",
+        "to": "A Cuenta",
+        "amount": "Monto",
+        "amountToTransfer": "Monto a transferir",
+        "rate": "Tasa de cambio",
+        "totalAmount": "Monto Total",
+        "calculatedField": "Campo Calculado",
+        "send": "Enviar transacción"
+    }
+  }
