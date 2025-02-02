@@ -1,4 +1,4 @@
-import { Cell, Footer, GridRow, HeadingCell, Root, GridHeadingRow, Action, TruncatedText, TruncatedParent } from "./styles";
+import { Cell, Footer, GridRow, HeadingCell, Root, GridHeadingRow, Action, TruncatedText } from "./styles";
 
 const Grid = ({ children }: React.PropsWithChildren) => {
 	return (

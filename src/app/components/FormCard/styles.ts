@@ -1,7 +1,7 @@
 import { Paper, PaperTypeMap, styled } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 
-type FormCardProps = OverridableComponent<PaperTypeMap<{}, "form">>
+type FormCardProps = OverridableComponent<PaperTypeMap<unknown, "form">>
 
 export const Root = styled(Paper)(() => ({
 	width: "100%",

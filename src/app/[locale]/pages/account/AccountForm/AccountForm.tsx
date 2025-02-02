@@ -1,5 +1,5 @@
 import { TextField, FormLabel, Button } from "@mui/material";
-import { Actions, Alias, FieldGroup, Fields } from "./styles";
+import { Alias, FieldGroup, Fields } from "./styles";
 import React, { useMemo, useState } from "react";
 import * as yup from "yup";
 import { Account, EditMode } from "@/app/types";
@@ -52,7 +52,7 @@ const AccountForm = ({
 			.number()
 			.required(errorMessage.required)
 			.typeError(errorMessage.numeric),
-	}), [existingAccounts]);
+	}), [existingAccounts, mode, t]);
 
 		const currenciesAutocompleteOptions: AutocompleteItem[] = useMemo(
 			() =>

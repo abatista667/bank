@@ -6,9 +6,8 @@ import TransactionForm from "../TransactionForm/TransactionForm";
 import Grid from "@/app/components/Grid";
 import { formatMoney } from "@/app/utils.ts";
 import { Account, Transaction, TransactionResponse } from "@/app/types";
-import { AliasCell, Root, TableWrapper } from "./style";
+import { AliasCell } from "./style";
 import {useTranslations} from 'next-intl';
-
 
 const mapTransactionToTransactionTableRow = (
 	transaction: TransactionResponse,

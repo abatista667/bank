@@ -15,17 +15,17 @@ export const GridRow = styled("div")(({ theme }) => ({
 	borderInline: `1px solid ` + theme.palette.grey[300],
 }));
 export const Cell = styled("div")(({theme}) => ({
-	...(theme.typography.body1 as any),
+	...(theme.typography.body1),
 	flex: 1,
 	paddingBlock: 12,
 }));
-export const TruncatedText = styled("div")(({theme}) => ({
+export const TruncatedText = styled("div")(() => ({
 	overflow: "hidden",
 	textOverflow: "ellipsis",
 	whiteSpace: "nowrap",
 }));
 export const Action = styled("div")(({theme}) => ({
-	...(theme.typography.body1 as any),
+	...(theme.typography.body1),
 	display: "flex",
 	flexDirection: "column",
 	[theme.breakpoints.up("sm")]: {
@@ -33,7 +33,7 @@ export const Action = styled("div")(({theme}) => ({
 	},
 }));
 export const HeadingCell = styled("div")(({theme}) => ({
-	...(theme.typography.body1 as any),
+	...(theme.typography.body1),
 	fontWeight: theme.typography.fontWeightBold,
 	flex: 1,
 	paddingBlock: 14,

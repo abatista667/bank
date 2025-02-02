@@ -1,5 +1,5 @@
 "use client"
-import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment } from "@mui/material";
 import { useDeferredValue, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -36,9 +36,9 @@ const AccountList = ({ accounts, currencies, addOrUpdateAccount, deleteAccount }
 	const accountsToDisplay = useMemo(() => 
 		filterByDeferred
 		? accounts.filter((item) =>
-				item.alias.toLowerCase().includes(filterBy.toLowerCase()),
+				item.alias.toLowerCase().includes(filterByDeferred.toLowerCase()),
 			)
-		: accounts,[filterByDeferred]) 
+		: accounts, [filterByDeferred, accounts]) 
 
 	const { showMessage } = useConfirmDialog();
 
@@ -99,7 +99,7 @@ const AccountList = ({ accounts, currencies, addOrUpdateAccount, deleteAccount }
 						InputProps={{
 							endAdornment: filterBy ? (
 								<InputAdornment position="end">
-									<IconButton onClick={(ev) => setFilterBy("")}>
+									<IconButton onClick={() => setFilterBy("")}>
 										<CloseIcon />
 									</IconButton>
 								</InputAdornment>

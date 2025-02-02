@@ -35,7 +35,7 @@ interface MenuContentProps {
 	onClose?: () => void;
 }
 
-const FlagIcon = styled("span")(({ theme }) => ({
+const FlagIcon = styled("span")(() => ({
 	fontSize: "24px",
 }));
 
@@ -61,7 +61,7 @@ const MenuContent = ({ onClose }: MenuContentProps) => {
 				<ListItem key={item.text} disablePadding>
 					<ListItemButton onClick={() => {
 						router.push(item.route);
-						onClose && onClose();
+						onClose?.();
 					}}>
 						<ListItemIcon>{item.icon}</ListItemIcon>
 						<ListItemText primary={item.text} />
