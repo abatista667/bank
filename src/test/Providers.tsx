@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@mui/material";
 import { NextIntlClientProvider } from "next-intl";
-import { PropsWithChildren, use } from "react";
+import { PropsWithChildren } from "react";
 import { theme } from "@/app/theme";
 import messages from "../../messages/en.json"
 

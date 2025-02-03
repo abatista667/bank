@@ -39,11 +39,12 @@ const currencies = [
     "GBP",
 ];
 
-const addOrUpdateAccount = jest.fn((account:Account) => {})
-const deleteAccount = jest.fn((id: number) => {})
+const addOrUpdateAccount = jest.fn(() => {})
+const deleteAccount = jest.fn(() => {})
 
 // Mock navigation:
 jest.mock('next/navigation', () => ({
+	//eslint-disable-next-line @typescript-eslint/no-require-imports
     ...require('next-router-mock'),
     useSearchParams: () => [[{ revalidate: '1' }]],
     useParams: () => jest.fn(),
