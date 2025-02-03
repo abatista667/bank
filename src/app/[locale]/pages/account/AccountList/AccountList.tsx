@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Account, EditMode } from "@/app/types";
-import { formatMoney } from "@/app/utils.ts";
+import { formatMoney } from "@/app/utils";
 import { AliasCell, CellMargin, FilterInput, FilterWrapper, Root, TableWrapper } from "./styles";
 import AccountForm from "../AccountForm/AccountForm";
 import { useConfirmDialog } from "@/app/components/ConfirmDialg/ConfirmDilogContext";

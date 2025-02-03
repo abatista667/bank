@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import { useMemo, useState } from "react";
 import TransactionForm from "../TransactionForm/TransactionForm";
 import Grid from "@/app/components/Grid";
-import { formatMoney } from "@/app/utils.ts";
+import { formatMoney } from "@/app/utils";
 import { Account, Transaction, TransactionResponse } from "@/app/types";
 import { AliasCell } from "./style";
 import {useTranslations} from 'next-intl';

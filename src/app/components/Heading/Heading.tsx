@@ -9,7 +9,7 @@ interface HeadingProps {
 const Heading = ({ title, action }: HeadingProps) => {
 	return (
 		<Root>
-			<Typography variant="h5" component={"div"}>
+			<Typography variant="h5">
 				{title}
 			</Typography>
 			<div>{action}</div>

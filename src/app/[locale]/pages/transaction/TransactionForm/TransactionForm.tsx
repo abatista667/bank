@@ -4,7 +4,7 @@ import Autocomplete, { AutocompleteItem } from "@/app/components/Autocomplete/Au
 import FormCard from "@/app/components/FormCard";
 import { errorMessage } from "@/app/constants/errorMessages";
 import { Account, Transaction } from "@/app/types";
-import { formatMoney } from "@/app/utils.ts";
+import { formatMoney } from "@/app/utils";
 import { TextField, FormLabel, Button, styled } from "@mui/material";
 import React, { useMemo, useState } from "react";
 import * as yup from "yup";
