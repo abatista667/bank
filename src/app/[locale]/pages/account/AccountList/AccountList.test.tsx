@@ -3,7 +3,7 @@ import { render, screen, within } from "@testing-library/react";
 import { Account } from "@/app/types";
 import { Providers } from "@/test/Providers";
 import AccountList from "./AccountList";
-import userEvent from '@testing-library/user-event'
+import userEvent from "@testing-library/user-event";
 
 const acountCollection: Account[] = [
   {

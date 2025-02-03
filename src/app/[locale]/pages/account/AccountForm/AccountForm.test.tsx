@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from '@testing-library/user-event'
+import userEvent from "@testing-library/user-event";
 import AccountForm from "./AccountForm";
 import { Account, EditMode } from "@/app/types";
 import { Providers } from "@/test/Providers";
@@ -62,7 +62,7 @@ describe("AccountForm", () => {
     expect(getTextFieldInput("Balance")).toHaveValue("1000");
   });
 
-  it("calls onSave when save button is clicked", async() => {
+  it("calls onSave when save button is clicked", async () => {
     renderComponent("create", selectedAccount);
     await userEvent.click(screen.getByText("Save"));
     expect(mockOnSave).toHaveBeenCalled();
@@ -86,8 +86,8 @@ describe("AccountForm", () => {
   it("validates required fields", async () => {
     renderComponent("create", selectedAccount);
     await userEvent.click(getTextFieldInput("Alias"));
-    await userEvent.keyboard("aaa")
-    await userEvent.clear(getTextFieldInput("Alias"))
+    await userEvent.keyboard("aaa");
+    await userEvent.clear(getTextFieldInput("Alias"));
 
     const aliasValidation = await findTextFieldValidationText(
       "Alias",
@@ -96,7 +96,7 @@ describe("AccountForm", () => {
     expect(aliasValidation).toBeInTheDocument();
 
     await userEvent.click(getTextFieldInput("Owner Id"));
-    await userEvent.keyboard("aaa")
+    await userEvent.keyboard("aaa");
     const owenerIdValidation = await findTextFieldValidationText(
       "Owner Id",
       "This field must be a number",
@@ -104,7 +104,7 @@ describe("AccountForm", () => {
     expect(owenerIdValidation).toBeInTheDocument();
 
     await userEvent.click(getTextFieldInput("Balance"));
-    await userEvent.keyboard("aaa")
+    await userEvent.keyboard("aaa");
     const balanceValidation = await findTextFieldValidationText(
       "Balance",
       "This field must be a number",

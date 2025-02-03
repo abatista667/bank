@@ -1,7 +1,8 @@
 import { DataHTMLAttributes, PropsWithChildren } from "react";
 import { Actions, FieldGroup, Fields, Root, Row } from "./styles";
 
-type FormCardProps = PropsWithChildren & DataHTMLAttributes<HTMLFormElement> &
+type FormCardProps = PropsWithChildren &
+  DataHTMLAttributes<HTMLFormElement> &
   React.FormHTMLAttributes<HTMLFormElement>;
 
 const FormCard = ({ children, ...rest }: FormCardProps) => {

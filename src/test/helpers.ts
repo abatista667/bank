@@ -13,11 +13,12 @@ export const findTextFieldValidationText = (
   validationText: string,
 ) => within(getTextField(name)).findByText(validationText);
 
-
-export  const pickAutocompleteFirstOption = async (autoCompleteAccesibleName: string) => {
-  const fromComboBox = getComboInput(autoCompleteAccesibleName)
-  await userEvent.click(fromComboBox)
-  const presentation =  await screen.findByRole("presentation")
-  const option = within(presentation).getAllByRole("option")[0]
-  await userEvent.click(option)
-} 
+export const pickAutocompleteFirstOption = async (
+  autoCompleteAccesibleName: string,
+) => {
+  const fromComboBox = getComboInput(autoCompleteAccesibleName);
+  await userEvent.click(fromComboBox);
+  const presentation = await screen.findByRole("presentation");
+  const option = within(presentation).getAllByRole("option")[0];
+  await userEvent.click(option);
+};

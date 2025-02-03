@@ -3,7 +3,7 @@ import TransactionForm from "./TransactionForm";
 import { Account, Transaction } from "@/app/types";
 import { Providers } from "@/test/Providers";
 import { getTextField } from "@/test/helpers";
-import userEvent from '@testing-library/user-event'
+import userEvent from "@testing-library/user-event";
 
 const mockAccounts: Account[] = [
   { ownerId: 1, alias: "Account 1", balance: 1000, currency: "USD" },
@@ -52,10 +52,12 @@ describe("TransactionForm", () => {
     expect(getTextField("Total Amount")).toBeInTheDocument();
   });
 
-  it("calls onSave when the form is submitted", async() => {
+  it("calls onSave when the form is submitted", async () => {
     renderComponent();
 
-    await userEvent.click(screen.getByRole("button", { name: "Send transaction" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Send transaction" }),
+    );
     expect(mockOnSave).toHaveBeenCalled();
   });
 
