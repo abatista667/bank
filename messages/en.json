@@ -19,7 +19,7 @@
     "transaction":{
         "title": "Transaction",
         "from": "From Account",
-        "to": "to Account",
+        "to": "To Account",
         "amount": "Amount",
         "amountToTransfer": "Amount to transfer",
         "rate": "Change rate",

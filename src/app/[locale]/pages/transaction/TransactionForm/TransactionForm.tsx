@@ -134,6 +134,7 @@ const TransactionForm = ({
 					<FormCard.FieldGroup>
 						<FormLabelStyled>{t("transaction.from")}</FormLabelStyled>
 						<Autocomplete
+							aria-label={t("transaction.from")}
                             sx={{minWidth: "200px"}}
 							size="small"
 							name="fromOwnerId"
@@ -153,6 +154,7 @@ const TransactionForm = ({
 					<FormCard.FieldGroup>
 						<FormLabelStyled>{t("transaction.to")}</FormLabelStyled>
 						<Autocomplete
+							aria-label={t("transaction.to")}
 							disabled={!transaction.fromOwnerId}
 							name="toOwnerId"
                             sx={{minWidth: "200px"}}
@@ -177,6 +179,7 @@ const TransactionForm = ({
 						<TextField
 							disabled={!transaction.fromOwnerId}
 							name="transferAmount"
+							aria-label={t("transaction.amountToTransfer")}
 							size="small"
 							fullWidth
 							value={transaction.transferAmount ?? ""}
@@ -188,17 +191,19 @@ const TransactionForm = ({
 					<FormCard.FieldGroup>
 						<FormLabelStyled>{t("transaction.rate")}</FormLabelStyled>
 						<TextField
+							aria-label={t("transaction.rate")}
 							name="changeRate"
 							size="small"
 							fullWidth
 							value={transaction.changeRate ?? ""}
 							disabled
-							placeholder="Calculated field"
+							placeholder={t("transaction.calculatedField")}
 						/>
 					</FormCard.FieldGroup>
 					<FormCard.FieldGroup>
 						<FormLabelStyled>{t("transaction.totalAmount")}</FormLabelStyled>
 						<TextField
+							aria-label={t("transaction.totalAmount")}
 							name="amount"
 							size="small"
 							fullWidth
@@ -208,7 +213,7 @@ const TransactionForm = ({
 									: ""
 							}
 							disabled
-							placeholder="Calculated field"
+							placeholder={t("transaction.calculatedField")}
 						/>
 					</FormCard.FieldGroup>
                 </FormCard.Row>

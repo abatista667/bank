@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import AccountForm from './AccountForm';
 import { Account, EditMode } from '@/app/types';
 import { Providers } from '@/test/Providers';
-import { findTextFieldValidationText, getComboInput, getTextFieldInput } from '@/test/helpers';
+import { findTextFieldValidationText, getComboInput, getTextField, getTextFieldInput } from '@/test/helpers';
 
 // Mock navigation:
 jest.mock('next/navigation', () => ({
@@ -31,7 +31,7 @@ describe('AccountForm', () => {
 	};
 	const currencies = ['USD', 'EUR'];
 
-	const renderComponent = (mode: EditMode) => {
+	const renderComponent = (mode: EditMode, selectedAccount: Partial<Account> = {}) => {
 		render(
             <Providers>
 			<AccountForm
@@ -47,7 +47,7 @@ describe('AccountForm', () => {
 	};
 
 	it('renders the form with initial values', () => {
-		renderComponent('create');
+		renderComponent('edit', selectedAccount);
 		expect(getTextFieldInput("Owner Id")).toHaveValue("1");
 		expect(getTextFieldInput("Alias")).toHaveValue('Test Account');
 		expect(getComboInput("Currency")).toHaveValue('USD');
@@ -55,9 +55,13 @@ describe('AccountForm', () => {
 	});
 
 	it('calls onSave when save button is clicked', () => {
-		renderComponent('create');
+		renderComponent('create', selectedAccount);
 		fireEvent.click(screen.getByText('Save'));
 		expect(mockOnSave).toHaveBeenCalled();
+	});
+	it('save button is disabled when selectedAccount is invalid', () => {
+		renderComponent('create');
+		expect(screen.getByText('Save')).toBeDisabled()
 	});
 
 	it('calls onCancel when cancel button is clicked', () => {
@@ -72,9 +76,10 @@ describe('AccountForm', () => {
 	});
 
 	it('validates required fields', async() => {
-		renderComponent('create');
+		renderComponent('create', selectedAccount);
 		fireEvent.change(getTextFieldInput("Alias"), { target: { value: 'a' } });
 		fireEvent.change(getTextFieldInput("Alias"), { target: { value: '' } });
+
 		const aliasValidation = await findTextFieldValidationText("Alias", "This field is required")
 		expect(aliasValidation).toBeInTheDocument();
 
