@@ -9,7 +9,7 @@ import AxiosMockAdapter from "axios-mock-adapter";
 
 const mock = new AxiosMockAdapter(client);
 
-// Mock any GET request to /changeRate
+// Mock GET request to /changeRate
 mock.onGet("/changeRate/USD/EUR").reply(200, 1.1);
 
 const mockAccounts: Account[] = [
