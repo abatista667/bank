@@ -125,10 +125,10 @@ const AccountList = ({ accounts, currencies, addOrUpdateAccount, deleteAccount }
 									{formatMoney(item.balance, item.currency)}
 								</Grid.Cell>
 								<Grid.ActionCell>
-									<IconButton onClick={() => onEditAccount(item)}>
+									<IconButton onClick={() => onEditAccount(item)}  aria-label="edit">
 										<EditIcon sx={{ width: 20 }} />
 									</IconButton>
-									<IconButton onClick={() => onDeleteAccount(item.ownerId)}>
+									<IconButton onClick={() => onDeleteAccount(item.ownerId)} aria-label="delete">
 										<DeleteIcon sx={{ width: 20 }} />
 									</IconButton>
 								</Grid.ActionCell>

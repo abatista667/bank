@@ -26,5 +26,9 @@
         "totalAmount": "Total Amount",
         "calculatedField": "Calculated Field",
         "send": "Send transaction"
+    },
+    "validationMessage":{
+      "required": "This field is required",
+	    "numeric": "This field must be a number"
     }
   }

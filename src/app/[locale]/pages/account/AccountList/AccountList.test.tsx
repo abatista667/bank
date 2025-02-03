@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import Layout from '@/app/[locale]/pages/layout';
+import { render, screen, within } from '@testing-library/react'
 import { Account } from '@/app/types';
 import { fireEvent } from '@testing-library/react';
 import { Providers } from '@/test/Providers';
@@ -51,20 +50,26 @@ jest.mock('next/navigation', () => ({
     usePathname: jest.fn().mockReturnValue('/some-route'),
   }));
 
+Object.defineProperty(window, 'location', {
+	value: {
+	  reload: jest.fn()
+	},
+  });
+
+  const renderComponent = ()=> render(
+	<Providers>
+			<AccountList
+				accounts={acountCollection}
+				currencies={currencies}
+				addOrUpdateAccount={addOrUpdateAccount}
+				deleteAccount={deleteAccount}
+			/>
+	</Providers>
+);
+
 describe('Page',() => {
 	it('renders account list', async () => {
-		render(
-			<Providers>
-				<Layout>
-					<AccountList
-						accounts={acountCollection}
-						currencies={currencies}
-						addOrUpdateAccount={addOrUpdateAccount}
-						deleteAccount={deleteAccount}
-					/>
-				</Layout>
-			</Providers>
-		);
+		renderComponent()
 
 		for(const account of acountCollection){
 			const accountElement = await screen.findByTestId(account.alias);
@@ -73,18 +78,7 @@ describe('Page',() => {
 	});
 
     it('filters accounts by alias', async () => {
-		render(
-			<Providers>
-				<Layout>
-					<AccountList
-						accounts={acountCollection}
-						currencies={currencies}
-						addOrUpdateAccount={addOrUpdateAccount}
-						deleteAccount={deleteAccount}
-					/>
-				</Layout>
-			</Providers>
-		);
+		renderComponent()
 
 		const filterInput = screen.getByPlaceholderText('Filter by Alias');
 		fireEvent.change(filterInput, { target: { value: 'Dollar' } });
@@ -96,21 +90,34 @@ describe('Page',() => {
 	});
 
 	it('opens account form on add button click', async () => {
-		render(
-			<Providers>
-				<Layout>
-					<AccountList
-						accounts={acountCollection}
-						currencies={currencies}
-						addOrUpdateAccount={addOrUpdateAccount}
-						deleteAccount={deleteAccount}
-					/>
-				</Layout>
-			</Providers>
-		);
+		renderComponent()
 
 		const addButton = screen.getByRole("button", { name: "Create New"});
 		fireEvent.click(addButton);
+
+		expect(await screen.findByTestId('accountForm')).toBeInTheDocument();
+	});
+
+	it('calls deleteAccount on delete button click', async () => {
+		renderComponent()
+
+		const deleteButton = screen.getAllByRole('button', { name: /delete/i })[0];
+		fireEvent.click(deleteButton);
+
+		const confirm = await screen.findByRole("dialog")
+
+		const confirmBtn = await within(confirm).findByRole("button", { name: "Yes" })
+
+		fireEvent.click(confirmBtn);
+
+		expect(deleteAccount).toHaveBeenCalledWith(acountCollection[0].ownerId);
+	});
+
+	it('opens account form on edit button click', async () => {
+		renderComponent()
+
+		const editButton = screen.getAllByRole('button', { name: /edit/i })[0];
+		fireEvent.click(editButton);
 
 		expect(await screen.findByTestId('accountForm')).toBeInTheDocument();
 	});

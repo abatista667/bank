@@ -3,7 +3,6 @@ import { Alias, FieldGroup, Fields } from "./styles";
 import React, { useMemo, useState } from "react";
 import * as yup from "yup";
 import { Account, EditMode } from "@/app/types";
-import { errorMessage } from "@/app/constants/errorMessages";
 import FormCard from "@/app/components/FormCard";
 import Autocomplete, { AutocompleteItem } from "@/app/components/Autocomplete/Autocomplete";
 import {useTranslations} from 'next-intl';
@@ -44,14 +43,14 @@ const AccountForm = ({
 					return !(mode === "create" && value && existingAccounts?.has(value));
 				},
 			)
-			.required(errorMessage.required)
-			.typeError(errorMessage.numeric),
-		alias: yup.string().required(errorMessage.required),
-		currency: yup.string().required(errorMessage.required),
+			.required(t("validationMessage.required"))
+			.typeError(t("validationMessage.numeric")),
+		alias: yup.string().required(t("validationMessage.required")),
+		currency: yup.string().required(t("validationMessage.required")),
 		balance: yup
 			.number()
-			.required(errorMessage.required)
-			.typeError(errorMessage.numeric),
+			.required(t("validationMessage.required"))
+			.typeError(t("validationMessage.numeric")),
 	}), [existingAccounts, mode, t]);
 
 		const currenciesAutocompleteOptions: AutocompleteItem[] = useMemo(
@@ -127,6 +126,7 @@ const AccountForm = ({
 				<FieldGroup>
 					<FormLabel>{t("account.currency")}</FormLabel>
 						<Autocomplete
+							aria-label={t("account.currency")}
                             sx={{minWidth: "200px"}}
 							size="small"
 							name="currency"

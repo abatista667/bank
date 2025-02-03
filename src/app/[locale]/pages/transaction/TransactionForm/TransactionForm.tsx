@@ -2,7 +2,6 @@
 import { getChangeRate } from "@/app/client/getChangeRate";
 import Autocomplete, { AutocompleteItem } from "@/app/components/Autocomplete/Autocomplete";
 import FormCard from "@/app/components/FormCard";
-import { errorMessage } from "@/app/constants/errorMessages";
 import { Account, Transaction } from "@/app/types";
 import { formatMoney } from "@/app/utils";
 import { TextField, FormLabel, Button, styled } from "@mui/material";
@@ -40,16 +39,16 @@ const TransactionForm = ({
 	const transactionValidationSchema = yup.object({
 		fromOwnerId: yup
 			.number()
-			.required(errorMessage.required)
-			.typeError(errorMessage.numeric),
+			.required(t("validationMessage.required"))
+			.typeError(t("validationMessage.numeric")),
 		toOwnerId: yup
 			.number()
-			.required(errorMessage.required)
-			.typeError(errorMessage.numeric),
+			.required(t("validationMessage.required"))
+			.typeError(t("validationMessage.numeric")),
 		transferAmount: yup
 			.number()
-			.required(errorMessage.required)
-			.typeError(errorMessage.numeric)
+			.required(t("validationMessage.required"))
+			.typeError(t("validationMessage.numeric"))
 			.test("balance", "Account has not enought balance", (value) => {
 				const account = accountMap.get(transaction.fromOwnerId);
 				return value < (account?.balance ?? 0);

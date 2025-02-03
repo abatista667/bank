@@ -26,5 +26,9 @@
         "totalAmount": "Monto Total",
         "calculatedField": "Campo Calculado",
         "send": "Enviar transacción"
+    },
+    "validationMessage":{
+      "required": "Este campo es requerido",
+	    "numeric": "Este cambo debe ser un numero"
     }
   }
