@@ -1,4 +1,4 @@
 export const routes = {
-	accountList: "/pages/account",
-	transactions: "/pages/transaction",
+  accountList: "/pages/account",
+  transactions: "/pages/transaction",
 };

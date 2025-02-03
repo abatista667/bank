@@ -1,20 +1,25 @@
-import { Cell, Footer, GridRow, HeadingCell, Root, GridHeadingRow, Action, TruncatedText } from "./styles";
+import {
+  Cell,
+  Footer,
+  GridRow,
+  HeadingCell,
+  Root,
+  GridHeadingRow,
+  Action,
+  TruncatedText,
+} from "./styles";
 
 const Grid = ({ children }: React.PropsWithChildren) => {
-	return (
-		<Root>
-			{children}
-			<Footer></Footer>
-		</Root>
-	);
+  return (
+    <Root>
+      {children}
+      <Footer></Footer>
+    </Root>
+  );
 };
 
 const Row = ({ children, ...rest }: React.PropsWithChildren) => {
-	return (
-		<GridRow {...rest}>
-			{children}
-		</GridRow>
-	);
+  return <GridRow {...rest}>{children}</GridRow>;
 };
 
 Grid.Heading = GridHeadingRow;

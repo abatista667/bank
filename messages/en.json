@@ -1,34 +1,34 @@
 {
-    "create": "Create New",
-    "cancel": "Cancel",
-    "menu": {
-      "transaction": "Transaction",
-      "account": "Account"
-    },
-    "account":{
-        "title": "Account",
-        "filter": "Filter by Alias",
-        "alias": "Alias",
-        "balance": "Balance",
-        "currency": "Currency",
-        "ownerId": "Owner Id",
-        "save": "Save",
-        "confirmDelete": "Are you sure to delete this account?",
-        "ownerIdNotUnique": "Cannot create an account with the same existing ID"
-    },
-    "transaction":{
-        "title": "Transaction",
-        "from": "From Account",
-        "to": "To Account",
-        "amount": "Amount",
-        "amountToTransfer": "Amount to transfer",
-        "rate": "Change rate",
-        "totalAmount": "Total Amount",
-        "calculatedField": "Calculated Field",
-        "send": "Send transaction"
-    },
-    "validationMessage":{
-      "required": "This field is required",
-	    "numeric": "This field must be a number"
-    }
+  "create": "Create New",
+  "cancel": "Cancel",
+  "menu": {
+    "transaction": "Transaction",
+    "account": "Account"
+  },
+  "account": {
+    "title": "Account",
+    "filter": "Filter by Alias",
+    "alias": "Alias",
+    "balance": "Balance",
+    "currency": "Currency",
+    "ownerId": "Owner Id",
+    "save": "Save",
+    "confirmDelete": "Are you sure to delete this account?",
+    "ownerIdNotUnique": "Cannot create an account with the same existing ID"
+  },
+  "transaction": {
+    "title": "Transaction",
+    "from": "From Account",
+    "to": "To Account",
+    "amount": "Amount",
+    "amountToTransfer": "Amount to transfer",
+    "rate": "Change rate",
+    "totalAmount": "Total Amount",
+    "calculatedField": "Calculated Field",
+    "send": "Send transaction"
+  },
+  "validationMessage": {
+    "required": "This field is required",
+    "numeric": "This field must be a number"
   }
+}

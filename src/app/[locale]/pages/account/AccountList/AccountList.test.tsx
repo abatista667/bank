@@ -1,124 +1,123 @@
-import '@testing-library/jest-dom'
-import { render, screen, within } from '@testing-library/react'
-import { Account } from '@/app/types';
-import { fireEvent } from '@testing-library/react';
-import { Providers } from '@/test/Providers';
-import AccountList from './AccountList';
+import "@testing-library/jest-dom";
+import { render, screen, within } from "@testing-library/react";
+import { Account } from "@/app/types";
+import { fireEvent } from "@testing-library/react";
+import { Providers } from "@/test/Providers";
+import AccountList from "./AccountList";
 
-const  acountCollection: Account[] = [
-    {
-        "ownerId": 1111,
-        "alias": "Dollar1",
-        "currency": "USD",
-        "balance": 1111111
-    },
-    {
-        "ownerId": 2222,
-        "alias": "Euro",
-        "currency": "EUR",
-        "balance": 2222
-    },
-    {
-        "ownerId": 1112,
-        "alias": "Dollar2",
-        "currency": "USD",
-        "balance": 2222
-    },
-    {
-        "ownerId": 2223,
-        "alias": "Euro2",
-        "currency": "EUR",
-        "balance": 2222
-    }
+const acountCollection: Account[] = [
+  {
+    ownerId: 1111,
+    alias: "Dollar1",
+    currency: "USD",
+    balance: 1111111,
+  },
+  {
+    ownerId: 2222,
+    alias: "Euro",
+    currency: "EUR",
+    balance: 2222,
+  },
+  {
+    ownerId: 1112,
+    alias: "Dollar2",
+    currency: "USD",
+    balance: 2222,
+  },
+  {
+    ownerId: 2223,
+    alias: "Euro2",
+    currency: "EUR",
+    balance: 2222,
+  },
 ];
 
-const currencies = [
-    "USD",
-    "EUR",
-    "GBP",
-];
+const currencies = ["USD", "EUR", "GBP"];
 
-const addOrUpdateAccount = jest.fn(() => {})
-const deleteAccount = jest.fn(() => {})
+const addOrUpdateAccount = jest.fn(() => {});
+const deleteAccount = jest.fn(() => {});
 
 // Mock navigation:
-jest.mock('next/navigation', () => ({
-	//eslint-disable-next-line @typescript-eslint/no-require-imports
-    ...require('next-router-mock'),
-    useSearchParams: () => [[{ revalidate: '1' }]],
-    useParams: () => jest.fn(),
-    usePathname: jest.fn().mockReturnValue('/some-route'),
-  }));
+jest.mock("next/navigation", () => ({
+  //eslint-disable-next-line @typescript-eslint/no-require-imports
+  ...require("next-router-mock"),
+  useSearchParams: () => [[{ revalidate: "1" }]],
+  useParams: () => jest.fn(),
+  usePathname: jest.fn().mockReturnValue("/some-route"),
+}));
 
-Object.defineProperty(window, 'location', {
-	value: {
-	  reload: jest.fn()
-	},
+Object.defineProperty(window, "location", {
+  value: {
+    reload: jest.fn(),
+  },
+});
+
+const renderComponent = () =>
+  render(
+    <Providers>
+      <AccountList
+        accounts={acountCollection}
+        currencies={currencies}
+        addOrUpdateAccount={addOrUpdateAccount}
+        deleteAccount={deleteAccount}
+      />
+    </Providers>,
+  );
+
+describe("Page", () => {
+  it("renders account list", async () => {
+    renderComponent();
+
+    for (const account of acountCollection) {
+      const accountElement = await screen.findByTestId(account.alias);
+      expect(accountElement).toBeInTheDocument();
+    }
   });
 
-  const renderComponent = ()=> render(
-	<Providers>
-			<AccountList
-				accounts={acountCollection}
-				currencies={currencies}
-				addOrUpdateAccount={addOrUpdateAccount}
-				deleteAccount={deleteAccount}
-			/>
-	</Providers>
-);
+  it("filters accounts by alias", async () => {
+    renderComponent();
 
-describe('Page',() => {
-	it('renders account list', async () => {
-		renderComponent()
+    const filterInput = screen.getByPlaceholderText("Filter by Alias");
+    fireEvent.change(filterInput, { target: { value: "Dollar" } });
 
-		for(const account of acountCollection){
-			const accountElement = await screen.findByTestId(account.alias);
-			expect(accountElement).toBeInTheDocument();
-		}
-	});
+    expect(await screen.findByTestId("Dollar1")).toBeInTheDocument();
+    expect(await screen.findByTestId("Dollar2")).toBeInTheDocument();
+    expect(screen.queryByTestId("Euro")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("Euro2")).not.toBeInTheDocument();
+  });
 
-    it('filters accounts by alias', async () => {
-		renderComponent()
+  it("opens account form on add button click", async () => {
+    renderComponent();
 
-		const filterInput = screen.getByPlaceholderText('Filter by Alias');
-		fireEvent.change(filterInput, { target: { value: 'Dollar' } });
+    const addButton = screen.getByRole("button", { name: "Create New" });
+    fireEvent.click(addButton);
 
-		expect(await screen.findByTestId('Dollar1')).toBeInTheDocument();
-		expect(await screen.findByTestId('Dollar2')).toBeInTheDocument();
-		expect(screen.queryByTestId('Euro')).not.toBeInTheDocument();
-		expect(screen.queryByTestId('Euro2')).not.toBeInTheDocument();
-	});
+    expect(await screen.findByTestId("accountForm")).toBeInTheDocument();
+  });
 
-	it('opens account form on add button click', async () => {
-		renderComponent()
+  it("calls deleteAccount on delete button click", async () => {
+    renderComponent();
 
-		const addButton = screen.getByRole("button", { name: "Create New"});
-		fireEvent.click(addButton);
+    const deleteButton = screen.getAllByRole("button", { name: /delete/i })[0];
+    fireEvent.click(deleteButton);
 
-		expect(await screen.findByTestId('accountForm')).toBeInTheDocument();
-	});
+    const confirm = await screen.findByRole("dialog");
 
-	it('calls deleteAccount on delete button click', async () => {
-		renderComponent()
+    const confirmBtn = await within(confirm).findByRole("button", {
+      name: "Yes",
+    });
 
-		const deleteButton = screen.getAllByRole('button', { name: /delete/i })[0];
-		fireEvent.click(deleteButton);
+    fireEvent.click(confirmBtn);
 
-		const confirm = await screen.findByRole("dialog")
+    expect(deleteAccount).toHaveBeenCalledWith(acountCollection[0].ownerId);
+  });
 
-		const confirmBtn = await within(confirm).findByRole("button", { name: "Yes" })
+  it("opens account form on edit button click", async () => {
+    renderComponent();
 
-		fireEvent.click(confirmBtn);
+    const editButton = screen.getAllByRole("button", { name: /edit/i })[0];
+    fireEvent.click(editButton);
 
-		expect(deleteAccount).toHaveBeenCalledWith(acountCollection[0].ownerId);
-	});
-
-	it('opens account form on edit button click', async () => {
-		renderComponent()
-
-		const editButton = screen.getAllByRole('button', { name: /edit/i })[0];
-		fireEvent.click(editButton);
-
-		expect(await screen.findByTestId('accountForm')).toBeInTheDocument();
-	});
-})
+    expect(await screen.findByTestId("accountForm")).toBeInTheDocument();
+  });
+});
