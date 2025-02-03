@@ -1,8 +1,9 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import TransactionForm from "./TransactionForm";
 import { Account, Transaction } from "@/app/types";
 import { Providers } from "@/test/Providers";
 import { getTextField } from "@/test/helpers";
+import userEvent from '@testing-library/user-event'
 
 const mockAccounts: Account[] = [
   { ownerId: 1, alias: "Account 1", balance: 1000, currency: "USD" },
@@ -51,17 +52,17 @@ describe("TransactionForm", () => {
     expect(getTextField("Total Amount")).toBeInTheDocument();
   });
 
-  it("calls onSave when the form is submitted", () => {
+  it("calls onSave when the form is submitted", async() => {
     renderComponent();
 
-    fireEvent.click(screen.getByRole("button", { name: "Send transaction" }));
+    await userEvent.click(screen.getByRole("button", { name: "Send transaction" }));
     expect(mockOnSave).toHaveBeenCalled();
   });
 
-  it("calls onCancel when the cancel button is clicked", () => {
+  it("calls onCancel when the cancel button is clicked", async () => {
     renderComponent();
 
-    fireEvent.click(screen.getByText("Cancel"));
+    await userEvent.click(screen.getByText("Cancel"));
     expect(mockOnCancel).toHaveBeenCalled();
   });
 

@@ -1,9 +1,9 @@
 import "@testing-library/jest-dom";
 import { render, screen, within } from "@testing-library/react";
 import { Account } from "@/app/types";
-import { fireEvent } from "@testing-library/react";
 import { Providers } from "@/test/Providers";
 import AccountList from "./AccountList";
+import userEvent from '@testing-library/user-event'
 
 const acountCollection: Account[] = [
   {
@@ -78,7 +78,8 @@ describe("Page", () => {
     renderComponent();
 
     const filterInput = screen.getByPlaceholderText("Filter by Alias");
-    fireEvent.change(filterInput, { target: { value: "Dollar" } });
+    await userEvent.click(filterInput);
+    await userEvent.keyboard("Dollar");
 
     expect(await screen.findByTestId("Dollar1")).toBeInTheDocument();
     expect(await screen.findByTestId("Dollar2")).toBeInTheDocument();
@@ -90,7 +91,7 @@ describe("Page", () => {
     renderComponent();
 
     const addButton = screen.getByRole("button", { name: "Create New" });
-    fireEvent.click(addButton);
+    await userEvent.click(addButton);
 
     expect(await screen.findByTestId("accountForm")).toBeInTheDocument();
   });
@@ -99,7 +100,7 @@ describe("Page", () => {
     renderComponent();
 
     const deleteButton = screen.getAllByRole("button", { name: /delete/i })[0];
-    fireEvent.click(deleteButton);
+    await userEvent.click(deleteButton);
 
     const confirm = await screen.findByRole("dialog");
 
@@ -107,7 +108,7 @@ describe("Page", () => {
       name: "Yes",
     });
 
-    fireEvent.click(confirmBtn);
+    await userEvent.click(confirmBtn);
 
     expect(deleteAccount).toHaveBeenCalledWith(acountCollection[0].ownerId);
   });
@@ -116,7 +117,7 @@ describe("Page", () => {
     renderComponent();
 
     const editButton = screen.getAllByRole("button", { name: /edit/i })[0];
-    fireEvent.click(editButton);
+    await userEvent.click(editButton);
 
     expect(await screen.findByTestId("accountForm")).toBeInTheDocument();
   });

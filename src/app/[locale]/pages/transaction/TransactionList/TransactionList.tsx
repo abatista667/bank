@@ -95,7 +95,7 @@ const TransactionList = ({
             <Grid.HeadingCell>{t("transaction.amount")}</Grid.HeadingCell>
           </Grid.Heading>
           {tableRow?.map((item, index) => (
-            <Grid.Row key={item.id ?? index} data-testid={item.from}>
+            <Grid.Row key={item.id ?? index} data-testid={`row-${index + 1}`}>
               <AliasCell>
                 <Grid.TruncatedText>{item.from}</Grid.TruncatedText>
               </AliasCell>

@@ -133,7 +133,7 @@ const TransactionForm = ({
   const isValid = transactionValidationSchema.isValidSync(transaction);
 
   return (
-    <FormCard action={onSave}>
+    <FormCard action={onSave} data-testid="TransactionForm">
       <FormCard.Fields>
         <FormCard.Row>
           <FormCard.FieldGroup>

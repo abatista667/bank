@@ -1,11 +1,11 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from '@testing-library/user-event'
 import AccountForm from "./AccountForm";
 import { Account, EditMode } from "@/app/types";
 import { Providers } from "@/test/Providers";
 import {
   findTextFieldValidationText,
   getComboInput,
-  getTextField,
   getTextFieldInput,
 } from "@/test/helpers";
 
@@ -62,9 +62,9 @@ describe("AccountForm", () => {
     expect(getTextFieldInput("Balance")).toHaveValue("1000");
   });
 
-  it("calls onSave when save button is clicked", () => {
+  it("calls onSave when save button is clicked", async() => {
     renderComponent("create", selectedAccount);
-    fireEvent.click(screen.getByText("Save"));
+    await userEvent.click(screen.getByText("Save"));
     expect(mockOnSave).toHaveBeenCalled();
   });
   it("save button is disabled when selectedAccount is invalid", () => {
@@ -72,9 +72,9 @@ describe("AccountForm", () => {
     expect(screen.getByText("Save")).toBeDisabled();
   });
 
-  it("calls onCancel when cancel button is clicked", () => {
+  it("calls onCancel when cancel button is clicked", async () => {
     renderComponent("create");
-    fireEvent.click(screen.getByText("Cancel"));
+    await userEvent.click(screen.getByText("Cancel"));
     expect(mockOnCancel).toHaveBeenCalled();
   });
 
@@ -85,8 +85,9 @@ describe("AccountForm", () => {
 
   it("validates required fields", async () => {
     renderComponent("create", selectedAccount);
-    fireEvent.change(getTextFieldInput("Alias"), { target: { value: "a" } });
-    fireEvent.change(getTextFieldInput("Alias"), { target: { value: "" } });
+    await userEvent.click(getTextFieldInput("Alias"));
+    await userEvent.keyboard("aaa")
+    await userEvent.clear(getTextFieldInput("Alias"))
 
     const aliasValidation = await findTextFieldValidationText(
       "Alias",
@@ -94,16 +95,16 @@ describe("AccountForm", () => {
     );
     expect(aliasValidation).toBeInTheDocument();
 
-    fireEvent.change(getTextFieldInput("Owner Id"), { target: { value: 1 } });
-    fireEvent.change(getTextFieldInput("Owner Id"), { target: { value: "" } });
+    await userEvent.click(getTextFieldInput("Owner Id"));
+    await userEvent.keyboard("aaa")
     const owenerIdValidation = await findTextFieldValidationText(
       "Owner Id",
       "This field must be a number",
     );
     expect(owenerIdValidation).toBeInTheDocument();
 
-    fireEvent.change(getTextFieldInput("Balance"), { target: { value: 1 } });
-    fireEvent.change(getTextFieldInput("Balance"), { target: { value: "" } });
+    await userEvent.click(getTextFieldInput("Balance"));
+    await userEvent.keyboard("aaa")
     const balanceValidation = await findTextFieldValidationText(
       "Balance",
       "This field must be a number",
